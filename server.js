@@ -1,5 +1,6 @@
 // dependencies
 const express = require('express');
+const path = require('path');
 
 // configuration
 const app = express();
@@ -10,7 +11,7 @@ app.use(express.json());
 
 // router
 app.get('/', (req, res) => {
-  res.send('test');
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 // listener
