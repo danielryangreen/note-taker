@@ -2,6 +2,9 @@
 const express = require('express');
 const path = require('path');
 
+// require UUID package
+const { v4: uuidv4 } = require('uuid');
+
 // DATA
 const noteData = require('./db/db');
 
@@ -30,7 +33,9 @@ app.get('*', (req, res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-  const newNote = req.body;
+  const {title, text} = req.body;
+  const id = uuidv4();
+  const newNote = {id: id, title: title, text: text};
   console.log(newNote);
   noteData.push(newNote);
   res.json(noteData);
