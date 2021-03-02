@@ -10,7 +10,12 @@ const noteData = require('./db/db');
 
 // CONFIGURATION
 const app = express();
-const PORT = 8080;
+
+// set port for Heroku
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -42,6 +47,6 @@ app.post('/api/notes', (req, res) => {
 });
 
 // LISTENER
-app.listen(PORT, () => {
-  console.log(`App listening on PORT: ${PORT}`);
+app.listen(port, () => {
+  console.log(`App listening on PORT: ${port}`);
 });
