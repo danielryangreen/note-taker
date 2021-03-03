@@ -1,12 +1,13 @@
 // DEPENDENCIES
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 // require UUID package
 const { v4: uuidv4 } = require('uuid');
 
 // DATA
-const noteData = require('./db/db');
+const noteData = require('./db/db.json');
 
 // CONFIGURATION
 const app = express();
@@ -42,7 +43,11 @@ app.post('/api/notes', (req, res) => {
   const id = uuidv4();
   const newNote = {id: id, title: title, text: text};
   console.log(newNote);
+
   noteData.push(newNote);
+  fs.writeFile('./db/db.json', JSON.stringify(noteData), (err) =>
+    err ? console.log(err) : console.log('Success!')
+  );
   res.json(noteData);
 });
 
